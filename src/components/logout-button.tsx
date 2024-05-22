@@ -4,7 +4,7 @@ import React from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 
 export default function LogoutButton() {
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const { signOut } = useAuthenticator((context) => [context.user]);
 
   if (!signOut) {
     return null;

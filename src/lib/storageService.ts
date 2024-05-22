@@ -1,7 +1,6 @@
 import { Amplify } from "aws-amplify";
 import outputs from "@root/amplify_outputs.json";
-import { uploadData } from "aws-amplify/storage";
-import { getUrl } from "aws-amplify/storage";
+import { uploadData, getUrl } from "aws-amplify/storage";
 
 Amplify.configure(outputs);
 

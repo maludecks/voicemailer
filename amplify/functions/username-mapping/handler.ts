@@ -14,7 +14,7 @@ export const handler: Handler = async (event) => {
   const userId = request.userAttributes.sub;
 
   try {
-    const { data, errors } = await client.models.Users.create({
+    const { data, errors } = await client.models.Usernames.create({
       userid: userId,
       username: preferredUsername,
     });

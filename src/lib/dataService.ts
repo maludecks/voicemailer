@@ -1,11 +1,20 @@
+import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "@root/amplify/data/resource";
 import storageService from "./storageService";
+import outputs from "@root/amplify_outputs.json";
+
+Amplify.configure(outputs);
+
+export type User = {
+  id: string;
+  username: string;
+};
 
 export type MessageWithUrl = {
   id: string;
-  senderid: string;
-  receiverid: string;
+  sender: User;
+  receiver: User;
   url: string;
 };
 
@@ -15,13 +24,15 @@ class DataService {
   saveMessage = async (
     messageId: string,
     path: string,
-    senderId: string,
-    receiverId: string
+    sender: User,
+    receiver: User
   ) => {
     await this.client.models.Messages.create({
       id: messageId,
-      senderid: senderId,
-      receiverid: receiverId,
+      senderid: sender.id,
+      senderusername: sender.username,
+      receiverid: receiver.id,
+      receiverusername: receiver.username,
       visibility: "private",
       isread: false,
       path,
@@ -52,8 +63,14 @@ class DataService {
 
         return {
           id: message.id,
-          senderid: message.senderid,
-          receiverid: message.receiverid,
+          sender: {
+            id: message.senderid,
+            username: message.senderusername,
+          },
+          receiver: {
+            id: message.receiverid,
+            username: message.receiverusername,
+          },
           url,
         };
       })
@@ -63,7 +80,7 @@ class DataService {
   };
 
   getUserId = async (username: string): Promise<string> => {
-    const { data: user } = await this.client.models.Users.get({ username });
+    const { data: user } = await this.client.models.Usernames.get({ username });
 
     if (!user) {
       throw new Error("User not found");

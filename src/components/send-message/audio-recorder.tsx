@@ -1,14 +1,15 @@
 "use client";
 
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { nanoid } from "nanoid";
 import { useState, useRef } from "react";
 import Alerts from "./alerts";
 import AudioPlayback from "./audio-playback";
 import RecordingControls from "./recording-controls";
 import voicemailSender from "@root/src/lib/voicemailSender";
+import { fetchUserAttributes } from "aws-amplify/auth";
+import { User } from "@root/src/lib/dataService";
 
-export default function AudioRecorder({ receiverId }: { receiverId: string }) {
+export default function AudioRecorder({ receiver }: { receiver: User }) {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [audioURL, setAudioURL] = useState<string>("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -32,8 +33,20 @@ export default function AudioRecorder({ receiverId }: { receiverId: string }) {
       return;
     }
 
+    const userAttr = fetchUserAttributes();
+    const senderUsername = (await userAttr).preferred_username;
+
+    if (!senderUsername) {
+      setError("Unable to get sender username");
+      return;
+    }
+
     try {
-      await voicemailSender.send(audioBlob, user.userId, receiverId);
+      await voicemailSender.send(
+        audioBlob,
+        { id: user.userId, username: senderUsername },
+        { id: receiver.id, username: receiver.username }
+      );
       setShowSuccess(true);
     } catch (error) {
       setError("Error sending voicemail :(");

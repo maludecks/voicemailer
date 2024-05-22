@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { generateClient } from "aws-amplify/data";
 import { useParams } from "next/navigation";
-import { type Schema } from "@root/amplify/data/resource";
 import AudioRecorder from "@root/src/components/send-message/audio-recorder";
 import dataService from "@root/src/lib/dataService";
 import { Alert, Loader } from "@aws-amplify/ui-react";
-
-const client = generateClient<Schema>();
-export type User = Schema["Users"]["type"];
 
 export default function Profile() {
   const [userId, setUserId] = useState<string>();
@@ -22,7 +17,7 @@ export default function Profile() {
       const userId = await dataService.getUserId(username);
       setUserId(userId);
     } catch (error) {
-      setError("Can't find this user :(");
+      // setError((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -39,7 +34,7 @@ export default function Profile() {
       {loading ? (
         <Loader />
       ) : userId ? (
-        <AudioRecorder receiverId={userId} />
+        <AudioRecorder receiver={{ id: userId, username }} />
       ) : (
         <p>This user doesn't exist :(</p>
       )}
