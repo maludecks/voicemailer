@@ -3,7 +3,7 @@ import * as AWS from "aws-sdk";
 
 const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider();
 
-export const handler: Handler = async (event, context, callback) => {
+export const handler: Handler = async (event) => {
   const { userPoolId, request } = event;
   const preferredUsername = request.userAttributes.preferred_username;
 
@@ -19,13 +19,13 @@ export const handler: Handler = async (event, context, callback) => {
 
     if (response.Users && response.Users.length > 0) {
       console.log("Username conflict", response.Users);
-      const error = new Error("Username already exists");
-      callback(error, event);
+      throw new Error("Username already exists");
     }
 
     console.log("No username conflict", response.Users);
-    callback(null, event);
+    return event; // Return the original event object to continue the Cognito workflow
   } catch (error) {
-    callback(new Error("Unable to validate username"), event);
+    console.error("Error during username validation:", error);
+    throw error; // Throw error to indicate a problem with the pre-signup process
   }
 };

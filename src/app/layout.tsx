@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AuthenticatorWrapper from "@/components/authenticator-wrapper";
+import outputs from "@root/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
-import outputs from "@/../amplify_outputs.json";
-import LogoutButton from "@/components/logout-button";
+import AuthenticatorWrapper from "../components/authenticator-wrapper";
+import LogoutButton from "../components/logout-button";
 
 Amplify.configure(outputs);
 

@@ -1,5 +1,6 @@
 import { defineAuth } from "@aws-amplify/backend";
 import { validateUsername } from "../functions/validate-username/resource";
+import { usernameMapping } from "../functions/username-mapping/resource";
 
 export const auth = defineAuth({
   loginWith: {
@@ -13,5 +14,6 @@ export const auth = defineAuth({
   },
   triggers: {
     preSignUp: validateUsername,
+    postConfirmation: usernameMapping,
   },
 });

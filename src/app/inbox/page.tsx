@@ -2,7 +2,7 @@
 
 import { Card, useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
-import { type Schema } from "@/../amplify/data/resource";
+import { type Schema } from "@root/amplify/data/resource";
 import { useEffect, useState } from "react";
 import { fetchUserAttributes } from "aws-amplify/auth";
 
