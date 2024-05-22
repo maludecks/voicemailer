@@ -1,7 +1,7 @@
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "@root/amplify/data/resource";
-import storageService from "./storageService";
+import { storageService } from "./storageService";
 import outputs from "@root/amplify_outputs.json";
 
 Amplify.configure(outputs);
@@ -90,4 +90,4 @@ class DataService {
   };
 }
 
-export default new DataService();
+export const dataService = new DataService();

@@ -2,7 +2,7 @@
 
 import { Alert, Card, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
-import dataService, { MessageWithUrl } from "@root/src/lib/dataService";
+import { dataService, MessageWithUrl } from "@root/src/lib/dataService";
 
 export default function Inbox() {
   const [messages, setMessages] = useState<MessageWithUrl[]>([]);

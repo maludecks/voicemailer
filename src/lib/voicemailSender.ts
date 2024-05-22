@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
-import storageService from "./storageService";
-import dataService, { User } from "./dataService";
+import { storageService } from "./storageService";
+import { dataService, User } from "./dataService";
 
 class VoicemailSender {
   send = async (audio: Blob, sender: User, receiver: User) => {
@@ -23,4 +23,4 @@ class VoicemailSender {
   };
 }
 
-export default new VoicemailSender();
+export const voicemailSender = new VoicemailSender();

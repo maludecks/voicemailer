@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 import Alerts from "./alerts";
 import AudioPlayback from "./audio-playback";
 import RecordingControls from "./recording-controls";
-import voicemailSender from "@root/src/lib/voicemailSender";
+import { voicemailSender } from "@root/src/lib/voicemailSender";
 import { fetchUserAttributes } from "aws-amplify/auth";
 import { User } from "@root/src/lib/dataService";
 

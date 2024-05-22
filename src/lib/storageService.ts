@@ -40,4 +40,4 @@ class StorageService {
   };
 }
 
-export default new StorageService();
+export const storageService = new StorageService();

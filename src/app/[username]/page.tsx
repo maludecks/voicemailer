@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import AudioRecorder from "@root/src/components/send-message/audio-recorder";
-import dataService from "@root/src/lib/dataService";
+import { dataService } from "@root/src/lib/dataService";
 import { Alert, Loader } from "@aws-amplify/ui-react";
 
 export default function Profile() {
@@ -36,7 +36,7 @@ export default function Profile() {
       ) : userId ? (
         <AudioRecorder receiver={{ id: userId, username }} />
       ) : (
-        <p>This user doesn't exist :(</p>
+        <p>This user does not exist :(</p>
       )}
     </>
   );
