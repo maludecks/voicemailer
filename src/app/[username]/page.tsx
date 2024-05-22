@@ -5,23 +5,26 @@ import { generateClient } from "aws-amplify/data";
 import { useParams } from "next/navigation";
 import { type Schema } from "@root/amplify/data/resource";
 import AudioRecorder from "@root/src/components/send-message/audio-recorder";
+import dataService from "@root/src/lib/dataService";
+import { Alert, Loader } from "@aws-amplify/ui-react";
 
 const client = generateClient<Schema>();
 export type User = Schema["Users"]["type"];
 
 export default function Profile() {
-  const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState<string>();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { username } = useParams<{ username: string }>();
 
   const checkUser = async () => {
     try {
-      const { data: user } = await client.models.Users.get({ username });
-      setUser(user);
+      const userId = await dataService.getUserId(username);
+      setUserId(userId);
     } catch (error) {
-      console.error("Unable to fetch user:", error);
+      setError("Can't find this user :(");
     } finally {
-      setLoading(false); // Ensure loading is set to false after fetching
+      setLoading(false);
     }
   };
 
@@ -29,13 +32,17 @@ export default function Profile() {
     checkUser();
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>; // Render a loading indicator while data is being fetched
-  }
+  return (
+    <>
+      {error && <Alert isDismissible={true}>{error}</Alert>}
 
-  return user ? (
-    <AudioRecorder receiver={user} />
-  ) : (
-    <p>This user doesn't exist :(</p>
+      {loading ? (
+        <Loader />
+      ) : userId ? (
+        <AudioRecorder receiverId={userId} />
+      ) : (
+        <p>This user doesn't exist :(</p>
+      )}
+    </>
   );
 }

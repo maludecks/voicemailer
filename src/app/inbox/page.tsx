@@ -1,42 +1,22 @@
 "use client";
 
-import { Card, useAuthenticator } from "@aws-amplify/ui-react";
-import { generateClient } from "aws-amplify/data";
-import { type Schema } from "@root/amplify/data/resource";
+import { Alert, Card, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
-import { fetchUserAttributes } from "aws-amplify/auth";
-
-const client = generateClient<Schema>();
-
-type Message = Schema["Messages"]["type"];
+import dataService, { MessageWithUrl } from "@root/src/lib/dataService";
 
 export default function Inbox() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageWithUrl[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuthenticator();
 
   const fetchMessages = async () => {
-    const userAttributes = await fetchUserAttributes();
-    console.log("User attributes: ", userAttributes);
-
-    const { data: messages, errors } = await client.models.Messages.list({
-      filter: {
-        receiverid: {
-          eq: user.userId,
-        },
-      },
-    });
-
-    if (errors && errors.length > 0) {
-      console.error("Unable to fetch messages: ", errors);
-      return;
+    try {
+      const messages = await dataService.getMessages(user.userId);
+      setMessages(messages);
+    } catch (e) {
+      setError("Unable to fetch messages");
     }
-
-    if (!messages || messages.length === 0) {
-      return;
-    }
-
-    setMessages(messages);
   };
 
   useEffect(() => {
@@ -47,9 +27,15 @@ export default function Inbox() {
     <>
       {messages.map((message) => (
         <Card key={message.id} title="Inbox">
-          message
+          from: {message.senderid}
+          <audio controls>
+            <source src={message.url} type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
         </Card>
       ))}
+
+      {error && <Alert isDismissible={true}>{error}</Alert>}
     </>
   );
 }
