@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import config from "$projectRoot/amplify_outputs.json";
+import config from "../../../amplify_outputs.json";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../data/resource";
 import { Handler } from "aws-lambda";

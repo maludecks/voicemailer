@@ -4,6 +4,7 @@ import { Alert, Card, Tabs, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { dataService, MessageWithUrl } from "@root/src/lib/dataService";
 import Message from "@root/src/components/message";
+import AudioRecorder from "@root/src/components/audio/audio-recorder";
 
 export default function Inbox() {
   const [messages, setMessages] = useState<MessageWithUrl[]>([]);
@@ -37,6 +38,11 @@ export default function Inbox() {
 
   return (
     <>
+      <div className="text-2xl font-bold">Inbox</div>
+      <div className="flex justify-center">
+        <AudioRecorder type="greeting" />
+      </div>
+      <div className="text-lg">Messages</div>
       <Tabs
         defaultValue="1"
         items={[

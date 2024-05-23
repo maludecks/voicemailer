@@ -3,18 +3,21 @@ import { TbSend } from "react-icons/tb";
 
 type AudioPlaybackProps = {
   audioURL: string;
-  sendAudio: () => void;
+  saveAudio?: () => void;
 };
 export default function AudioPlayback({
   audioURL,
-  sendAudio,
+  saveAudio,
 }: AudioPlaybackProps) {
   return (
     <div className="mt-4">
       <audio src={audioURL} controls />
-      <Button color={"primary"} onClick={sendAudio}>
-        Send <TbSend className="ml-2" />
-      </Button>
+
+      {saveAudio && (
+        <Button color={"primary"} onClick={saveAudio}>
+          Send <TbSend className="ml-2" />
+        </Button>
+      )}
     </div>
   );
 }

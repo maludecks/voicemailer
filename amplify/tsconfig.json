@@ -9,8 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "$amplify/*": ["../.amplify/generated/*"],
-      "$projectRoot/*": ["../*"]
+      "$amplify/*": ["../.amplify/generated/*"]
     }
   }
 }

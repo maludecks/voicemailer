@@ -8,10 +8,16 @@ class StorageService {
   uploadAudio = async (
     audioBlob: Blob,
     messageId: string,
-    userId: string
+    userId: string,
+    type: "voicemail" | "greeting"
   ): Promise<string> => {
+    const audioPath =
+      type === "voicemail"
+        ? `audio/${userId}/${messageId}.mp3`
+        : `greeting/${userId}/${messageId}.mp3`;
+
     const res = uploadData({
-      path: `audio/${userId}/${messageId}.mp3`,
+      path: audioPath,
       data: audioBlob,
       options: {
         contentType: audioBlob.type,

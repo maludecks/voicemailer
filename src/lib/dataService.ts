@@ -40,6 +40,35 @@ class DataService {
     });
   };
 
+  saveGreeting = async (user: User, path: string) => {
+    const prevGreeting = await this.getGreeting(user.id);
+
+    const newGreeting = {
+      userid: user.id,
+      path,
+    };
+
+    if (!prevGreeting) {
+      await this.client.models.Greetings.create(newGreeting);
+    } else {
+      await this.client.models.Greetings.update(newGreeting);
+    }
+  };
+
+  getGreeting = async (userId: string): Promise<string> => {
+    const { data: greeting } = await this.client.models.Greetings.get({
+      userid: userId,
+    });
+
+    if (!greeting) {
+      throw new Error("Greeting not found");
+    }
+
+    const url = await storageService.getAudioUrl(greeting.path);
+
+    return url;
+  };
+
   getMessages = async (userId: string): Promise<MessageWithUrl[]> => {
     const { data: messages, errors } = await this.client.models.Messages.list({
       filter: {

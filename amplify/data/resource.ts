@@ -9,6 +9,13 @@ const schema = a.schema({
     .identifier(["username"])
     .secondaryIndexes((index) => [index("userid")])
     .authorization((allow) => [allow.publicApiKey()]),
+  Greetings: a
+    .model({
+      userid: a.string().required(),
+      path: a.string().required(),
+    })
+    .identifier(["userid"])
+    .authorization((allow) => [allow.publicApiKey()]),
   Messages: a
     .model({
       id: a.string().required(),

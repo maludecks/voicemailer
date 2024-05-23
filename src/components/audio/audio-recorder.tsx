@@ -5,11 +5,16 @@ import { useState, useRef } from "react";
 import Alerts from "./alerts";
 import AudioPlayback from "./audio-playback";
 import RecordingControls from "./recording-controls";
-import { voicemailSender } from "@root/src/lib/voicemailSender";
+import { voicemailService } from "@root/src/lib/voicemailService";
 import { fetchUserAttributes } from "aws-amplify/auth";
 import { User } from "@root/src/lib/dataService";
 
-export default function AudioRecorder({ receiver }: { receiver: User }) {
+type AudioRecorderProps = {
+  type: "voicemail" | "greeting";
+  receiver?: User;
+};
+
+export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [audioURL, setAudioURL] = useState<string>("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -20,11 +25,40 @@ export default function AudioRecorder({ receiver }: { receiver: User }) {
 
   const { user } = useAuthenticator();
 
+  const saveGreeting = async () => {
+    setShowSuccess(false);
+
+    if (!user || !user.userId) {
+      setError("You must be logged in to save a greeting");
+      return;
+    }
+
+    if (!audioBlob) {
+      setError("No audio to save");
+      return;
+    }
+
+    try {
+      await voicemailService.saveGreeting(audioBlob, {
+        id: user.userId,
+        username: user.username,
+      });
+      setShowSuccess(true);
+    } catch (error) {
+      setError("Error saving greeting :(");
+    }
+  };
+
   const sendAudio = async () => {
     setShowSuccess(false);
 
     if (!user || !user.userId) {
       setError("You must be logged in to send a message");
+      return;
+    }
+
+    if (!receiver) {
+      setError("No receiver selected");
       return;
     }
 
@@ -42,7 +76,7 @@ export default function AudioRecorder({ receiver }: { receiver: User }) {
     }
 
     try {
-      await voicemailSender.send(
+      await voicemailService.sendVoicemail(
         audioBlob,
         { id: user.userId, username: senderUsername },
         { id: receiver.id, username: receiver.username }
@@ -94,7 +128,12 @@ export default function AudioRecorder({ receiver }: { receiver: User }) {
         startRecording={startRecording}
         stopRecording={stopRecording}
       />
-      {audioURL && <AudioPlayback audioURL={audioURL} sendAudio={sendAudio} />}
+      {audioURL && (
+        <AudioPlayback
+          audioURL={audioURL}
+          saveAudio={type === "voicemail" ? sendAudio : saveGreeting}
+        />
+      )}
       <Alerts error={error} showSuccess={showSuccess} />
     </>
   );
