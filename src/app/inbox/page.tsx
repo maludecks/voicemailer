@@ -3,11 +3,10 @@
 import { Alert, Card, Tabs, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { dataService, MessageWithUrl } from "@root/src/lib/dataService";
-import Message from "@root/src/components/message";
+import MessageInbox from "@root/src/components/message-inbox";
 import AudioRecorder from "@root/src/components/audio/audio-recorder";
 
 export default function Inbox() {
-  const [messages, setMessages] = useState<MessageWithUrl[]>([]);
   const [newMessages, setNewMessages] = useState<MessageWithUrl[]>([]);
   const [oldMessages, setOldMessages] = useState<MessageWithUrl[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -25,8 +24,6 @@ export default function Inbox() {
           setOldMessages([...oldMessages, message]);
         }
       }
-
-      setMessages(messages);
     } catch (e) {
       setError("Unable to fetch messages");
     }
@@ -38,29 +35,32 @@ export default function Inbox() {
 
   return (
     <>
-      <div className="text-2xl font-bold">Inbox</div>
-      <div className="flex justify-center">
+      <div className="text-2xl font-bold text-blue-700 p-4">Inbox</div>
+      <div className="flex justify-center p-4">
         <AudioRecorder type="greeting" />
       </div>
-      <div className="text-lg">Messages</div>
       <Tabs
         defaultValue="1"
         items={[
           {
             label: "New messages",
             value: "1",
-            content: <Message messages={newMessages} />,
+            content: <MessageInbox messages={newMessages} />,
           },
           {
             label: "Previous",
             value: "2",
-            content: <Message messages={oldMessages} />,
+            content: <MessageInbox messages={oldMessages} />,
           },
         ]}
         isLazy
       />
 
-      {error && <Alert isDismissible={true}>{error}</Alert>}
+      {error && (
+        <Alert isDismissible={true} variation="error" className="m-4">
+          {error}
+        </Alert>
+      )}
     </>
   );
 }

@@ -40,6 +40,13 @@ class DataService {
     });
   };
 
+  markMessageAsRead = async (messageId: string) => {
+    await this.client.models.Messages.update({
+      id: messageId,
+      isread: true,
+    });
+  };
+
   saveGreeting = async (user: User, path: string) => {
     const prevGreeting = await this.getGreeting(user.id);
 

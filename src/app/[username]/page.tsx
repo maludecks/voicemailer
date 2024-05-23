@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import AudioRecorder from "@root/src/components/audio/audio-recorder";
 import { dataService } from "@root/src/lib/dataService";
-import { Alert, Loader } from "@aws-amplify/ui-react";
+import { Alert, Divider, Loader } from "@aws-amplify/ui-react";
 import AudioPlayback from "@root/src/components/audio/audio-playback";
+import Marquee from "@root/src/components/marquee";
 
 export default function Profile() {
   const [userId, setUserId] = useState<string>();
@@ -39,6 +40,9 @@ export default function Profile() {
 
       {userId && greetingUrl && (
         <div className="flex w-full flex-col gap-4 items-center justify-center">
+          <Marquee />
+          <h1 className="text-3xl mb-2">@{username}</h1>
+          <h3 className="mb-2">inbox</h3>
           <AudioPlayback audioURL={greetingUrl} />
           <AudioRecorder type="voicemail" receiver={{ id: userId, username }} />
         </div>

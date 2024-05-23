@@ -5,7 +5,7 @@ import outputs from "@root/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
 import AuthenticatorWrapper from "../components/auth/authenticator-wrapper";
-import LogoutButton from "../components/auth/logout-button";
+import Header from "../components/header";
 
 Amplify.configure(outputs);
 
@@ -25,10 +25,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthenticatorWrapper>
-          <main className="flex min-h-screen flex-col items-center p-24">
-            <LogoutButton />
-            {children}
-          </main>
+          <Header />
+          <main className="w-full">{children}</main>
         </AuthenticatorWrapper>
       </body>
     </html>

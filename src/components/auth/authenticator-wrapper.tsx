@@ -12,10 +12,11 @@ export default function CustomAuthenticator({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
-      <Authenticator signUpAttributes={["preferred_username", "email"]}>
-        {({ signOut, user }) => <div>{children}</div>}
-      </Authenticator>
-    </div>
+    <Authenticator
+      signUpAttributes={["preferred_username", "email"]}
+      className="h-screen flex flex-col items-center justify-center"
+    >
+      {({ signOut, user }) => <>{children}</>}
+    </Authenticator>
   );
 }
