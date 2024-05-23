@@ -15,6 +15,7 @@ export type MessageWithUrl = {
   id: string;
   sender: User;
   receiver: User;
+  isRead: boolean;
   url: string;
 };
 
@@ -58,7 +59,7 @@ class DataService {
     }
 
     const messagesWithUrl = await Promise.all(
-      messages.map(async (message) => {
+      messages.map(async (message): Promise<MessageWithUrl> => {
         const url = await storageService.getAudioUrl(message.path);
 
         return {
@@ -72,6 +73,7 @@ class DataService {
             username: message.receiverusername,
           },
           url,
+          isRead: message.isread,
         };
       })
     );

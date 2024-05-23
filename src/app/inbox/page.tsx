@@ -1,11 +1,14 @@
 "use client";
 
-import { Alert, Card, useAuthenticator } from "@aws-amplify/ui-react";
+import { Alert, Card, Tabs, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { dataService, MessageWithUrl } from "@root/src/lib/dataService";
+import Message from "@root/src/components/message";
 
 export default function Inbox() {
   const [messages, setMessages] = useState<MessageWithUrl[]>([]);
+  const [newMessages, setNewMessages] = useState<MessageWithUrl[]>([]);
+  const [oldMessages, setOldMessages] = useState<MessageWithUrl[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuthenticator();
@@ -13,6 +16,15 @@ export default function Inbox() {
   const fetchMessages = async () => {
     try {
       const messages = await dataService.getMessages(user.userId);
+
+      for (const message of messages) {
+        if (message.isRead === false) {
+          setNewMessages([...newMessages, message]);
+        } else {
+          setOldMessages([...oldMessages, message]);
+        }
+      }
+
       setMessages(messages);
     } catch (e) {
       setError("Unable to fetch messages");
@@ -25,15 +37,22 @@ export default function Inbox() {
 
   return (
     <>
-      {messages.map((message) => (
-        <Card key={message.id} title="Inbox">
-          from: {message.sender.username}
-          <audio controls>
-            <source src={message.url} type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
-        </Card>
-      ))}
+      <Tabs
+        defaultValue="1"
+        items={[
+          {
+            label: "New messages",
+            value: "1",
+            content: <Message messages={newMessages} />,
+          },
+          {
+            label: "Previous",
+            value: "2",
+            content: <Message messages={oldMessages} />,
+          },
+        ]}
+        isLazy
+      />
 
       {error && <Alert isDismissible={true}>{error}</Alert>}
     </>

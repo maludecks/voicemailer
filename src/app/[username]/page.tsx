@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import AudioRecorder from "@root/src/components/send-message/audio-recorder";
+import AudioRecorder from "@root/src/components/audio/audio-recorder";
 import { dataService } from "@root/src/lib/dataService";
 import { Alert, Loader } from "@aws-amplify/ui-react";
 

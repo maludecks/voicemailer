@@ -4,8 +4,8 @@ import "./globals.css";
 import outputs from "@root/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
-import AuthenticatorWrapper from "../components/authenticator-wrapper";
-import LogoutButton from "../components/logout-button";
+import AuthenticatorWrapper from "../components/auth/authenticator-wrapper";
+import LogoutButton from "../components/auth/logout-button";
 
 Amplify.configure(outputs);
 
