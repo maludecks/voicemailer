@@ -14,16 +14,20 @@ export default function RecordingControls({
   stopRecording,
 }: RecordingControlsProps) {
   return (
-    <Button onClick={isRecording ? stopRecording : startRecording}>
+    <>
       {isRecording ? (
-        <span className="flex items-center">
-          <FaCircleStop className="mr-2" /> Stop recording
-        </span>
+        <Button className="stop-button" onClick={stopRecording}>
+          <span className="flex items-center">
+            <FaCircleStop className="mr-2" /> Stop recording
+          </span>
+        </Button>
       ) : (
-        <span className="flex items-center">
-          <FaMicrophoneAlt className="mr-2" /> Start recording
-        </span>
+        <Button className="record-button" onClick={startRecording}>
+          <span className="flex items-center">
+            <FaMicrophoneAlt className="mr-2" /> Start recording
+          </span>
+        </Button>
       )}
-    </Button>
+    </>
   );
 }

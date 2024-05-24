@@ -122,7 +122,7 @@ export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center">
       <RecordingControls
         isRecording={isRecording}
         startRecording={startRecording}
@@ -135,6 +135,6 @@ export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
         />
       )}
       <Alerts error={error} showSuccess={showSuccess} />
-    </>
+    </div>
   );
 }

@@ -2,8 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --pink: #fab5d2;
+    --burnt-pink: #e11d48;
+    --yellow: #feea80;
+  }
+}
+
 .marquee-text::before {
   content: "✨";
   margin-left: 20px;
   margin-right: 20px;
+}
+
+button.record-button {
+  background-color: var(--burnt-pink);
+  border-color: var(--burnt-pink);
+  color: white;
+  height: 45px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+
+button.stop-button {
+  background-color: white;
+  border-color: white;
+  color: var(--burnt-pink);
+  height: 45px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+
+button.send-button {
+  background-color: var(--yellow);
+  border-color: var(--yellow);
+  color: black;
+  height: 45px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+
+button.menu-button {
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+
+  &:hover {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &[data-state="open"] svg.avatar-icon {
+    stroke-width: 0.3;
+  }
+}
+
+.main-menu > button {
+  &:hover {
+    background-color: transparent;
+    color: initial;
+  }
+}
+
+div.amplify-card {
+  background-color: transparent;
 }
