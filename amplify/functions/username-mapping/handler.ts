@@ -13,6 +13,8 @@ export const handler: Handler = async (event) => {
     Item: {
       userid: userId,
       username: preferredUsername,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
   };
 

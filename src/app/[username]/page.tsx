@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import AudioRecorder from "@root/src/components/audio/audio-recorder";
 import { MessageWithUrl, dataService } from "@root/src/lib/dataService";
-import { Alert, Divider, Loader } from "@aws-amplify/ui-react";
+import { Alert, Loader } from "@aws-amplify/ui-react";
 import AudioPlayback from "@root/src/components/audio/audio-playback";
 import Marquee from "@root/src/components/marquee";
 import { BsInbox } from "react-icons/bs";
@@ -26,7 +26,11 @@ export default function Profile() {
       const messages = await dataService.getMessages(userId);
 
       setUserId(userId);
-      setGreetingUrl(greeting);
+
+      if (greeting) {
+        setGreetingUrl(greeting);
+      }
+
       setMessages(messages);
     } catch (error) {
       // setError((error as Error).message);

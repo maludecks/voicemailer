@@ -1,14 +1,12 @@
 "use client";
 
-import { Alert, Card, Tabs, useAuthenticator } from "@aws-amplify/ui-react";
+import { Alert, Tabs, useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { dataService, MessageWithUrl } from "@root/src/lib/dataService";
 import MessageInbox from "@root/src/components/message-inbox";
 import AudioRecorder from "@root/src/components/audio/audio-recorder";
 import Account from "@root/src/components/auth/account";
-import { HiOutlineMailOpen } from "react-icons/hi";
 import { FaMicrophoneAlt, FaUserCog } from "react-icons/fa";
-import { FcSettings } from "react-icons/fc";
 
 export default function Inbox() {
   const [newMessages, setNewMessages] = useState<MessageWithUrl[]>([]);

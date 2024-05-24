@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Fira_Mono } from "next/font/google";
+import { fetchUserAttributes } from "aws-amplify/auth";
 
 const font = Fira_Mono({ weight: "400", subsets: ["latin"] });
 
@@ -14,20 +15,35 @@ const MarqueeText = ({ content }: { content: string }) => {
 };
 
 const Marquee = () => {
+  const [username, setUsername] = useState<string>();
+
+  const getUsername = async () => {
+    const userAttr = await fetchUserAttributes();
+    const username = userAttr.preferred_username;
+
+    if (username) {
+      setUsername(username);
+    }
+  };
+
+  useEffect(() => {
+    getUsername();
+  }, []);
+
   return (
     <aside
       className={`${font.className} bg-black h-14 flex items-center text-white w-full overflow-hidden mb-12`}
     >
       <div className="flex w-max animate-marquee whitespace-nowrap">
         <div className="flex space-x-4">
-          <MarqueeText content="Welcome to @testuser11111 voicemail inbox" />
+          <MarqueeText content={`Welcome to @${username} voicemail inbox`} />
           <MarqueeText content="Make voicemails fun again" />
           <MarqueeText content="Listen to my greeting" />
           <MarqueeText content="Leave a message after the imaginary beep" />
           <MarqueeText content="Bringing voicemails back to life" />
         </div>
         <div className="flex space-x-4">
-          <MarqueeText content="Welcome to @testuser11111 voicemail inbox" />
+          <MarqueeText content={`Welcome to @${username} voicemail inbox`} />
           <MarqueeText content="Make voicemails silly again" />
           <MarqueeText content="Listen to my greeting" />
           <MarqueeText content="Leave a message after the imaginary beep" />

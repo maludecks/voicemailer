@@ -62,13 +62,13 @@ class DataService {
     }
   };
 
-  getGreeting = async (userId: string): Promise<string> => {
+  getGreeting = async (userId: string): Promise<string | null> => {
     const { data: greeting } = await this.client.models.Greetings.get({
       userid: userId,
     });
 
     if (!greeting) {
-      throw new Error("Greeting not found");
+      return null;
     }
 
     const url = await storageService.getAudioUrl(greeting.path);
@@ -118,7 +118,14 @@ class DataService {
   };
 
   getUserId = async (username: string): Promise<string> => {
-    const { data: user } = await this.client.models.Usernames.get({ username });
+    const { data: user, errors } = await this.client.models.Usernames.get({
+      username,
+    });
+
+    if (errors && errors.length > 0) {
+      console.error("Unable to fetch user: ", errors);
+      throw new Error("Unable to fetch user");
+    }
 
     if (!user) {
       throw new Error("User not found");
