@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.className} bg-[#fab5d2] h-full flex flex-col`}>
+      <body className={`${font.className} bg-[#ffdfe7] h-full flex flex-col`}>
         <AuthenticatorWrapper>
           <Header />
           {children}

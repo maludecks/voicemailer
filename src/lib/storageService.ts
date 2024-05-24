@@ -38,7 +38,6 @@ class StorageService {
       path,
       options: {
         validateObjectExistence: false,
-        expiresIn: 20,
       },
     });
 

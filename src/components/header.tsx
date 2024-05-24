@@ -7,10 +7,10 @@ import { Menu, MenuButton, MenuItem, View } from "@aws-amplify/ui-react";
 import { RxAvatar } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { FaVoicemail } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Header() {
   const [username, setUsername] = useState<string>();
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const getUsername = async () => {
     const userAttr = await fetchUserAttributes();
@@ -26,7 +26,7 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className="flex items-center pl-16 pr-16 h-24 bg-[#feea80]">
+    <nav className="flex items-center pl-16 pr-16 h-24 bg-[#feea80] border-black border-b-2">
       <FaVoicemail size={35} className="mr-auto" />
       <Menu
         trigger={
@@ -50,7 +50,9 @@ export default function Header() {
         }
         className="main-menu"
       >
-        <MenuItem isDisabled>@{username}</MenuItem>
+        <MenuItem>
+          <Link href="/inbox">@{username}</Link>
+        </MenuItem>
         <MenuItem>{username && <LogoutButton />}</MenuItem>
       </Menu>
     </nav>

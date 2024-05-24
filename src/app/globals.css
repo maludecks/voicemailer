@@ -8,6 +8,27 @@
     --burnt-pink: #e11d48;
     --yellow: #feea80;
   }
+
+  [data-amplify-authenticator] {
+    --amplify-components-authenticator-router-box-shadow: 0 0 16px
+      var(--amplify-colors-overlay-10);
+    --amplify-components-authenticator-router-border-width: 0;
+    --amplify-components-authenticator-form-padding: var(--amplify-space-medium)
+      var(--amplify-space-xl) var(--amplify-space-xl);
+    --amplify-components-button-primary-background-color: var(
+      --amplify-colors-neutral-100
+    );
+    --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px
+      var(--amplify-colors-purple-60);
+    --amplify-components-tabs-item-active-border-color: var(
+      --amplify-colors-neutral-100
+    );
+    --amplify-components-tabs-item-color: var(--amplify-colors-neutral-80);
+    --amplify-components-tabs-item-active-color: var(
+      --amplify-colors-neutral-50
+    );
+    --amplify-components-button-link-color: var(--amplify-colors-purple-80);
+  }
 }
 
 .marquee-text::before {
@@ -16,7 +37,7 @@
   margin-right: 20px;
 }
 
-button.record-button {
+button.pink-button {
   background-color: var(--burnt-pink);
   border-color: var(--burnt-pink);
   color: white;
@@ -25,7 +46,7 @@ button.record-button {
   cursor: pointer;
 }
 
-button.stop-button {
+button.white-button {
   background-color: white;
   border-color: white;
   color: var(--burnt-pink);
@@ -34,7 +55,7 @@ button.stop-button {
   cursor: pointer;
 }
 
-button.send-button {
+button.yellow-button {
   background-color: var(--yellow);
   border-color: var(--yellow);
   color: black;
@@ -72,4 +93,16 @@ button.menu-button {
 
 div.amplify-card {
   background-color: transparent;
+}
+
+div.inbox-tabs {
+  & .amplify-tabs__item {
+    color: #4d4d4d;
+    border-color: #777777;
+
+    &.amplify-tabs__item--active {
+      color: black;
+      border-color: black;
+    }
+  }
 }

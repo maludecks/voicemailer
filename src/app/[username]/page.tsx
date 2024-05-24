@@ -68,14 +68,18 @@ export default function Profile() {
                 Public inbox <BsInbox className="ml-2" />
               </h2>
               <div>
-                <MessageInbox messages={messages} />
+                <MessageInbox messages={messages} shouldMarkAsRead={false} />
               </div>
             </div>
           </section>
         </>
       )}
 
-      {!loading && !userId && <p>This user does not exist :(</p>}
+      {!loading && !userId && (
+        <div className="flex w-full flex-grow flex-col items-center justify-center">
+          <p>This user does not exist :(</p>
+        </div>
+      )}
     </main>
   );
 }
