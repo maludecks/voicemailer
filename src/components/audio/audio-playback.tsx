@@ -11,9 +11,9 @@ export default function AudioPlayback({
 }: AudioPlaybackProps) {
   return (
     <>
-      <audio src={audioURL} controls />
+      {audioURL && <audio src={audioURL} controls />}
 
-      {saveAudio && (
+      {audioURL && saveAudio && (
         <Button className="yellow-button" onClick={saveAudio}>
           Send <TbSend className="ml-2" />
         </Button>

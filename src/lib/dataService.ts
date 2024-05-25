@@ -17,6 +17,7 @@ export type MessageWithUrl = {
   receiver: User;
   isRead: boolean;
   url: string;
+  createdAt: Date;
 };
 
 class DataService {
@@ -110,6 +111,7 @@ class DataService {
           },
           url,
           isRead: message.isread,
+          createdAt: new Date(message.createdAt),
         };
       })
     );

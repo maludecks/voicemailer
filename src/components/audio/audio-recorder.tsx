@@ -87,6 +87,7 @@ export default function AudioRecorder({
         { id: receiver.id, username: receiver.username }
       );
       setShowSuccess(true);
+      setAudioURL("");
 
       if (shouldUpdate) {
         shouldUpdate(true);

@@ -54,15 +54,19 @@ export default function MessageInbox({
             className="w-full flex flex-col items-center justify-center border-gray-900 border-b-2 mb-2"
           >
             <p>
-              <span className="text-sm italic">from: </span>
+              <span className="text-xs italic">from: </span>
               <Link
-                className="underline underline-offset-2 decoration-dotted"
+                className="underline text-sm underline-offset-2 decoration-dotted"
                 href={`/${message.sender.username}`}
               >
                 @{message.sender.username}
               </Link>
+              <span className="text-xs">
+                {" // "}
+                {message.createdAt.toUTCString()}
+              </span>
             </p>
-            <section className="flex flex-row items-center mt-2 mb-2">
+            <section className="flex flex-row items-center mb-2">
               <audio
                 style={{ marginRight: "10px" }}
                 controls
