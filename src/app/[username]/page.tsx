@@ -18,12 +18,12 @@ export default function Profile() {
   const [error, setError] = useState<string | null>(null);
   const { username } = useParams<{ username: string }>();
   const [messages, setMessages] = useState<MessageWithUrl[]>([]);
+  const [updateMessages, setUpdateMessages] = useState(false);
 
   const fetchProfile = async () => {
     try {
       const userId = await dataService.getUserId(username);
       const greeting = await dataService.getGreeting(userId);
-      const messages = await dataService.getMessages(userId);
 
       setUserId(userId);
 
@@ -31,7 +31,7 @@ export default function Profile() {
         setGreetingUrl(greeting);
       }
 
-      setMessages(messages);
+      await fetchMessages(userId);
     } catch (error) {
       // setError((error as Error).message);
     } finally {
@@ -39,9 +39,14 @@ export default function Profile() {
     }
   };
 
+  const fetchMessages = async (userId: string) => {
+    const messages = await dataService.getMessages(userId);
+    setMessages(messages);
+  };
+
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [updateMessages]);
 
   return (
     <main className="flex flex-col flex-1 overflow-auto h-screen">
@@ -59,12 +64,13 @@ export default function Profile() {
           </div>
           <section className="flex flex-col md:flex-row w-full mt-12 flex-grow border-t-2 border-black">
             <div className="flex w-full flex-col h-[500px] border-b-2 md:border-b-0 md:h-auto md:w-1/2 border-r-0 md:border-r-2 border-black items-center justify-center">
-              <h3 className="flex items-center justify-center text-3xl font-bold mb-4">
+              <h3 className="flex items-center gap-2 justify-center text-3xl font-bold mb-4">
                 Leave a voicemail <FaVoicemail className="ml-2" />
               </h3>
               <AudioRecorder
                 type="voicemail"
                 receiver={{ id: userId, username }}
+                shouldUpdate={setUpdateMessages}
               />
             </div>
             <div className="flex flex-col w-full h-[500px] md:h-auto md:w-1/2">
@@ -72,7 +78,11 @@ export default function Profile() {
                 Public inbox <BsInbox className="ml-2" />
               </h2>
               <div>
-                <MessageInbox messages={messages} shouldMarkAsRead={false} />
+                <MessageInbox
+                  messages={messages}
+                  shouldMarkAsRead={false}
+                  shouldUpdate={setUpdateMessages}
+                />
               </div>
             </div>
           </section>

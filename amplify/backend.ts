@@ -15,12 +15,3 @@ const backend = defineBackend({
   validateUsername,
   usernameMapping,
 });
-
-const { cfnUserPool } = backend.auth.resources.cfnResources;
-cfnUserPool.policies = {
-  passwordPolicy: {
-    minimumLength: 8,
-    requireNumbers: true,
-    temporaryPasswordValidityDays: 20,
-  },
-};

@@ -12,6 +12,7 @@ export default function Inbox() {
   const [newMessages, setNewMessages] = useState<MessageWithUrl[]>([]);
   const [oldMessages, setOldMessages] = useState<MessageWithUrl[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [updateMessages, setUpdateMessages] = useState(false);
 
   const { user } = useAuthenticator();
 
@@ -39,14 +40,14 @@ export default function Inbox() {
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [updateMessages]);
 
   return (
-    <>
-      <div className="text-2xl align-center font-bold text-blue-700 p-4">
+    <section className="flex flex-col w-full items-center min-h-screen">
+      <div className="text-2xl text-center font-bold text-blue-700 p-4">
         Inbox
       </div>
-      <div className="flex flex-col w-full justify-center items-center inbox-tabs">
+      <div className="inbox-tabs">
         <Tabs
           defaultValue="1"
           items={[
@@ -95,6 +96,6 @@ export default function Inbox() {
           {error}
         </Alert>
       )}
-    </>
+    </section>
   );
 }

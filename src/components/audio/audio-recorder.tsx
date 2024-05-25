@@ -12,9 +12,14 @@ import { User } from "@root/src/lib/dataService";
 type AudioRecorderProps = {
   type: "voicemail" | "greeting";
   receiver?: User;
+  shouldUpdate?: (update: boolean) => void;
 };
 
-export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
+export default function AudioRecorder({
+  type,
+  receiver,
+  shouldUpdate,
+}: AudioRecorderProps) {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [audioURL, setAudioURL] = useState<string>("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -82,6 +87,10 @@ export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
         { id: receiver.id, username: receiver.username }
       );
       setShowSuccess(true);
+
+      if (shouldUpdate) {
+        shouldUpdate(true);
+      }
     } catch (error) {
       setError("Error sending voicemail :(");
     }
@@ -122,7 +131,7 @@ export default function AudioRecorder({ type, receiver }: AudioRecorderProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col gap-2 items-center justify-center">
       <RecordingControls
         isRecording={isRecording}
         startRecording={startRecording}

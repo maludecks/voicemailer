@@ -10,7 +10,7 @@ export default function AudioPlayback({
   saveAudio,
 }: AudioPlaybackProps) {
   return (
-    <div className="mt-4">
+    <>
       <audio src={audioURL} controls />
 
       {saveAudio && (
@@ -18,6 +18,6 @@ export default function AudioPlayback({
           Send <TbSend className="ml-2" />
         </Button>
       )}
-    </div>
+    </>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { Authenticator } from "@aws-amplify/ui-react";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import awsExports from "@root/amplify_outputs.json";
+import { useEffect } from "react";
 
 Amplify.configure(awsExports);
 

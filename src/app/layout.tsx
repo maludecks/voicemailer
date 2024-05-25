@@ -28,6 +28,18 @@ export default function RootLayout({
           <Header />
           {children}
         </AuthenticatorWrapper>
+        <footer className="flex justify-center items-center h-16 bg-[#feea80] border-black border-t-2">
+          <p className="text-sm">
+            &copy; {new Date().getFullYear()} | by{" "}
+            <a
+              href="https://x.com/maludecks"
+              className="underline decoration-dotted"
+            >
+              @maludecks
+            </a>
+            , hire me?
+          </p>
+        </footer>
       </body>
     </html>
   );

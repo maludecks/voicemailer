@@ -5,15 +5,21 @@ import Link from "next/link";
 type MessageProps = {
   messages: MessageWithUrl[];
   shouldMarkAsRead: boolean;
+  shouldUpdate?: (update: boolean) => void;
 };
 
 export default function MessageInbox({
   messages,
   shouldMarkAsRead,
+  shouldUpdate,
 }: MessageProps) {
   const handleAudioEnd = async (messageId: string) => {
     try {
       await dataService.markMessageAsRead(messageId);
+
+      if (shouldUpdate) {
+        shouldUpdate(true);
+      }
     } catch (error) {
       console.error("Error marking message as read", error);
     }

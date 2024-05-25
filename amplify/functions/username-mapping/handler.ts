@@ -9,7 +9,9 @@ export const handler: Handler = async (event) => {
   const userId = request.userAttributes.sub;
 
   const params = {
-    TableName: process.env.USERS_TABLE_NAME || "Usernames",
+    TableName:
+      process.env.USERS_TABLE_NAME ||
+      "Usernames-vbl7ohlynzan5mcl7sywmll7dq-NONE",
     Item: {
       userid: userId,
       username: preferredUsername,

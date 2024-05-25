@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from "react";
 import LogoutButton from "@src/components/auth/logout-button";
 import { fetchUserAttributes } from "aws-amplify/auth";
-import { Menu, MenuButton, MenuItem, View } from "@aws-amplify/ui-react";
+import {
+  Divider,
+  Menu,
+  MenuButton,
+  MenuItem,
+  View,
+} from "@aws-amplify/ui-react";
 import { RxAvatar } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { FaVoicemail } from "react-icons/fa";
@@ -51,8 +57,12 @@ export default function Header() {
         className="main-menu"
       >
         <MenuItem>
-          <Link href="/inbox">@{username}</Link>
+          <Link href={`/${username}`}>@{username}</Link>
         </MenuItem>
+        <MenuItem>
+          <Link href="/inbox">Inbox</Link>
+        </MenuItem>
+        <Divider />
         <MenuItem>{username && <LogoutButton />}</MenuItem>
       </Menu>
     </nav>
