@@ -80,7 +80,6 @@ export default function Profile() {
               <div>
                 <MessageInbox
                   messages={messages}
-                  shouldMarkAsRead={false}
                   shouldUpdate={setUpdateMessages}
                 />
               </div>

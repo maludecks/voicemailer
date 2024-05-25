@@ -117,6 +117,17 @@ class DataService {
     return messagesWithUrl;
   };
 
+  deleteMessage = async (messageId: string) => {
+    const { errors } = await this.client.models.Messages.delete({
+      id: messageId,
+    });
+
+    if (errors && errors.length > 0) {
+      console.error("Unable to delete message: ", errors);
+      throw new Error("Unable to delete message");
+    }
+  };
+
   getUserId = async (username: string): Promise<string> => {
     const { data: user, errors } = await this.client.models.Usernames.get({
       username,

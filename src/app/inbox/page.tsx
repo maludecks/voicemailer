@@ -33,6 +33,7 @@ export default function Inbox() {
 
       setNewMessages(newMessages);
       setOldMessages(oldMessages);
+      setUpdateMessages(false);
     } catch (e) {
       setError("Unable to fetch messages");
     }
@@ -55,14 +56,23 @@ export default function Inbox() {
               label: "New messages",
               value: "1",
               content: (
-                <MessageInbox messages={newMessages} shouldMarkAsRead={true} />
+                <MessageInbox
+                  messages={newMessages}
+                  shouldMarkAsRead={true}
+                  shouldShowDelete={true}
+                  shouldUpdate={setUpdateMessages}
+                />
               ),
             },
             {
               label: "Opened messages",
               value: "2",
               content: (
-                <MessageInbox messages={oldMessages} shouldMarkAsRead={false} />
+                <MessageInbox
+                  messages={oldMessages}
+                  shouldShowDelete={true}
+                  shouldUpdate={setUpdateMessages}
+                />
               ),
             },
             {

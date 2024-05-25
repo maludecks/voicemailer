@@ -1,21 +1,37 @@
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { MessageWithUrl, dataService } from "../lib/dataService";
 import Link from "next/link";
+import { Button } from "@aws-amplify/ui-react";
+import { BiTrash } from "react-icons/bi";
 
 type MessageProps = {
   messages: MessageWithUrl[];
-  shouldMarkAsRead: boolean;
   shouldUpdate?: (update: boolean) => void;
+  shouldMarkAsRead?: boolean;
+  shouldShowDelete?: boolean;
 };
 
 export default function MessageInbox({
   messages,
   shouldMarkAsRead,
+  shouldShowDelete,
   shouldUpdate,
 }: MessageProps) {
   const handleAudioEnd = async (messageId: string) => {
     try {
       await dataService.markMessageAsRead(messageId);
+
+      if (shouldUpdate) {
+        shouldUpdate(true);
+      }
+    } catch (error) {
+      console.error("Error marking message as read", error);
+    }
+  };
+
+  const handleDelete = async (messageId: string) => {
+    try {
+      await dataService.deleteMessage(messageId);
 
       if (shouldUpdate) {
         shouldUpdate(true);
@@ -46,14 +62,23 @@ export default function MessageInbox({
                 @{message.sender.username}
               </Link>
             </p>
-            <section className="mt-2 mb-2">
+            <section className="flex flex-row items-center mt-2 mb-2">
               <audio
+                style={{ marginRight: "10px" }}
                 controls
                 onEnded={() => shouldMarkAsRead && handleAudioEnd(message.id)}
               >
                 <source src={message.url} type="audio/mp3" />
                 Your browser does not support the audio element.
               </audio>
+              {shouldShowDelete && (
+                <Button
+                  className="pink-button"
+                  onClick={() => handleDelete(message.id)}
+                >
+                  <BiTrash />
+                </Button>
+              )}
             </section>
           </div>
         ))
