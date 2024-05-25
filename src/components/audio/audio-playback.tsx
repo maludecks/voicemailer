@@ -14,7 +14,7 @@ export default function AudioPlayback({
     <>
       {audioURL && (
         <audio controls aria-label="Audio playback" preload="auto">
-          <source src={audioURL} />
+          <source src={audioURL} type="audio/mp3" />
         </audio>
       )}
 
