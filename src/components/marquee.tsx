@@ -33,8 +33,13 @@ const Marquee = () => {
   return (
     <aside
       className={`${font.className} bg-black h-14 flex items-center text-white w-full overflow-hidden mb-12`}
+      aria-label="Dynamic Marquee"
+      role="marquee"
     >
-      <div className="flex w-max animate-marquee whitespace-nowrap">
+      <div
+        className="flex w-max animate-marquee whitespace-nowrap"
+        aria-live="off"
+      >
         <div className="flex space-x-4">
           <MarqueeText content={`Welcome to @${username} voicemail inbox`} />
           <MarqueeText content="Make voicemails fun again" />

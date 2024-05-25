@@ -10,12 +10,24 @@ export default function Alerts({
   return (
     <>
       {error && (
-        <Alert isDismissible={true} hasIcon={true} heading="Oh no...">
+        <Alert
+          isDismissible={true}
+          hasIcon={true}
+          heading="Oh no..."
+          role="alert"
+          aria-live="assertive"
+        >
           {error}
         </Alert>
       )}
       {showSuccess && (
-        <Alert isDismissible={true} hasIcon={true} heading="Voilà!">
+        <Alert
+          isDismissible={true}
+          hasIcon={true}
+          heading="Voilà!"
+          role="alert"
+          aria-live="polite"
+        >
           Voicemail sent 🎉
         </Alert>
       )}

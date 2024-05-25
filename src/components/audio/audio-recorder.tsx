@@ -132,19 +132,28 @@ export default function AudioRecorder({
   };
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center">
+    <div
+      className="flex flex-col gap-2 items-center justify-center"
+      aria-label="Audio Recorder Interface"
+    >
       <RecordingControls
         isRecording={isRecording}
         startRecording={startRecording}
         stopRecording={stopRecording}
+        aria-label="Recording Controls"
       />
       {audioURL && (
         <AudioPlayback
           audioURL={audioURL}
           saveAudio={type === "voicemail" ? sendAudio : saveGreeting}
+          aria-label="Audio Playback"
         />
       )}
-      <Alerts error={error} showSuccess={showSuccess} />
+      <Alerts
+        error={error}
+        showSuccess={showSuccess}
+        aria-label="Notification Alerts"
+      />
     </div>
   );
 }

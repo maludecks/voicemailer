@@ -44,20 +44,25 @@ export default function MessageInbox({
   return (
     <>
       {messages.length === 0 ? (
-        <div className="flex justify-center items-center h-40">
-          <HiOutlineMailOpen />
+        <div
+          className="flex justify-center items-center h-40"
+          aria-label="No messages"
+        >
+          <HiOutlineMailOpen aria-hidden="true" />
         </div>
       ) : (
         messages.map((message) => (
           <div
             key={message.id}
             className="w-full flex flex-col items-center justify-center border-gray-900 border-b-2 mb-2"
+            role="article"
           >
             <p>
               <span className="text-xs italic">from: </span>
               <Link
                 className="underline text-sm underline-offset-2 decoration-dotted"
                 href={`/${message.sender.username}`}
+                aria-label={`Message from ${message.sender.username}`}
               >
                 @{message.sender.username}
               </Link>
@@ -66,11 +71,15 @@ export default function MessageInbox({
                 {message.createdAt.toUTCString()}
               </span>
             </p>
-            <section className="flex flex-row items-center mb-2">
+            <section
+              className="flex flex-row items-center mb-2"
+              aria-label="Message controls"
+            >
               <audio
                 style={{ marginRight: "10px" }}
                 controls
                 onEnded={() => shouldMarkAsRead && handleAudioEnd(message.id)}
+                aria-label="Message audio"
               >
                 <source src={message.url} type="audio/mp3" />
                 Your browser does not support the audio element.
@@ -79,8 +88,9 @@ export default function MessageInbox({
                 <Button
                   className="pink-button"
                   onClick={() => handleDelete(message.id)}
+                  aria-label="Delete message"
                 >
-                  <BiTrash />
+                  <BiTrash aria-hidden="true" />
                 </Button>
               )}
             </section>

@@ -5,17 +5,27 @@ type AudioPlaybackProps = {
   audioURL: string;
   saveAudio?: () => void;
 };
+
 export default function AudioPlayback({
   audioURL,
   saveAudio,
 }: AudioPlaybackProps) {
   return (
     <>
-      {audioURL && <audio src={audioURL} controls />}
+      {audioURL && (
+        <audio controls aria-label="Audio playback" preload="auto">
+          <source src={audioURL} />
+        </audio>
+      )}
 
       {audioURL && saveAudio && (
-        <Button className="yellow-button" onClick={saveAudio}>
-          Send <TbSend className="ml-2" />
+        <Button
+          className="yellow-button"
+          onClick={saveAudio}
+          aria-label="Send audio"
+          tabIndex={0}
+        >
+          Send <TbSend className="ml-2" aria-hidden="true" />
         </Button>
       )}
     </>

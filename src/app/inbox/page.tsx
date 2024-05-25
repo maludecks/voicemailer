@@ -44,13 +44,21 @@ export default function Inbox() {
   }, [updateMessages]);
 
   return (
-    <section className="flex flex-col w-full items-center min-h-screen">
-      <div className="text-2xl text-center font-bold text-blue-700 p-4">
+    <section
+      className="flex flex-col w-full items-center min-h-screen"
+      aria-label="User inbox"
+    >
+      <div
+        className="text-2xl text-center font-bold text-blue-700 p-4"
+        role="heading"
+        aria-level={1}
+      >
         Inbox
       </div>
       <div className="inbox-tabs">
         <Tabs
           defaultValue="1"
+          aria-label="Inbox tabs"
           items={[
             {
               label: "New messages",
@@ -77,8 +85,12 @@ export default function Inbox() {
             },
             {
               label: (
-                <span className="flex flex-row w-full justify-center items-center">
-                  <FaMicrophoneAlt className="mr-2" /> Greeting
+                <span
+                  className="flex flex-row w-full justify-center items-center"
+                  aria-label="Greeting settings"
+                >
+                  <FaMicrophoneAlt className="mr-2" aria-hidden="true" />{" "}
+                  Greeting
                 </span>
               ),
               value: "3",
@@ -90,8 +102,12 @@ export default function Inbox() {
             },
             {
               label: (
-                <span className="flex flex-row w-full justify-center items-center">
-                  <FaUserCog className="mr-2" /> Account settings
+                <span
+                  className="flex flex-row w-full justify-center items-center"
+                  aria-label="Account settings"
+                >
+                  <FaUserCog className="mr-2" aria-hidden="true" /> Account
+                  settings
                 </span>
               ),
               value: "4",
@@ -102,7 +118,12 @@ export default function Inbox() {
         />
       </div>
       {error && (
-        <Alert isDismissible={true} variation="error" className="m-4">
+        <Alert
+          isDismissible={true}
+          variation="error"
+          className="m-4"
+          role="alert"
+        >
           {error}
         </Alert>
       )}

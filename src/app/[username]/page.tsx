@@ -49,20 +49,34 @@ export default function Profile() {
   }, [updateMessages]);
 
   return (
-    <main className="flex flex-col flex-1 overflow-auto h-screen">
-      {error && <Alert isDismissible={true}>{error}</Alert>}
+    <main className="flex flex-col flex-1 overflow-auto h-screen" role="main">
+      {error && (
+        <Alert role="alert" isDismissible={true}>
+          {error}
+        </Alert>
+      )}
 
-      {loading && <Loader />}
+      {loading && <Loader aria-label="Loading profile" />}
 
       {userId && (
         <>
-          <Marquee />
-          <div className="flex w-full flex-col gap-4 items-center justify-center flex-grow max-h-64">
-            <h1 className="text-5xl font-bold">@{username}</h1>
+          <Marquee aria-label="Profile banner" />
+          <section
+            className="flex w-full flex-col gap-4 items-center justify-center flex-grow max-h-64"
+            aria-labelledby="profile-header"
+          >
+            <h1 id="profile-header" className="text-5xl font-bold">
+              @{username}
+            </h1>
 
-            {greetingUrl && <AudioPlayback audioURL={greetingUrl} />}
-          </div>
-          <section className="flex flex-col md:flex-row w-full mt-12 flex-grow border-t-2 border-black">
+            {greetingUrl && (
+              <AudioPlayback
+                audioURL={greetingUrl}
+                aria-label="Play greeting"
+              />
+            )}
+          </section>
+          <div className="flex flex-col md:flex-row w-full mt-12 flex-grow border-t-2 border-black">
             <div className="flex w-full flex-col h-[500px] border-b-2 md:border-b-0 md:h-auto md:w-1/2 border-r-0 md:border-r-2 border-black items-center justify-center">
               <h3 className="flex items-center gap-2 justify-center text-3xl font-bold mb-4">
                 Leave a voicemail <FaVoicemail className="ml-2" />
@@ -71,6 +85,7 @@ export default function Profile() {
                 type="voicemail"
                 receiver={{ id: userId, username }}
                 shouldUpdate={setUpdateMessages}
+                aria-label="Leave a voicemail"
               />
             </div>
             <div className="flex flex-col w-full h-[500px] md:h-auto md:w-1/2">
@@ -81,10 +96,11 @@ export default function Profile() {
                 <MessageInbox
                   messages={messages}
                   shouldUpdate={setUpdateMessages}
+                  aria-label="Message inbox"
                 />
               </div>
             </div>
-          </section>
+          </div>
         </>
       )}
 
